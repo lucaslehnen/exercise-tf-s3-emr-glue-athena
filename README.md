@@ -12,6 +12,8 @@ Foram utilizados as seguintes ferramentas/tecnologias:
 
 ## Passo-a-passo
 
+Abaixo o que eu fiz passo-a-passo para resolver o exercício.
+
 Criei um usuário do IAM chamado `GitHub` na AWS e gerei credenciais para acesso. Por hora, como é um exercício, apenas dei permissão de administrador.
 
 Criei um workspace no Terraform Cloud com o fluxo orientado por API para utilizar no GitHub Actions.
@@ -24,7 +26,11 @@ Adicionei as duas variáveis de ambiente no Terraform Cloud para esse workspace:
 
 Peguei um novo token no Terraform Cloud: https://app.terraform.io/app/settings/tokens?utm_source=learn e criei uma secret no repositório do Github chamada `TERRAFORMCLOUDTOKEN`.
 
+Escrevi os workflows do GitHub Actions:
+- `validate.yaml`  Roda alguns comandos do Terraform para validar o código e gerar um plan, sem aplicar.
+- `deploy.yaml` Faz o mesmo que o validate além de aplicar as alterações.
 
+Criei o bucket para o "datalake" e comitei no git para validar os workflows.
 
 Fontes:
 

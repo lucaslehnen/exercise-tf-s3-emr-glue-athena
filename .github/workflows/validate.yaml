@@ -4,17 +4,15 @@ on:
   push:
     branches:
       - develop
-      - main
 
   pull_request:
     branches:
       - develop
-      - main
 
 jobs:
 
   terraform-validate:
-    name: 'Terraform'
+    name: 'Terraform Validate and Plan'
     runs-on: ubuntu-latest
     steps:
 
@@ -77,9 +75,3 @@ jobs:
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
-
-  terraform-apply:
-    uses: lucaslehnen/exercise-tf-s3-emr-glue-athena/.github/workflows/deploy.yaml@main
-    needs:
-      - terraform-validate
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'

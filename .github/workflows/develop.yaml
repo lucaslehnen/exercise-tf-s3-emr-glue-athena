@@ -15,17 +15,13 @@ jobs:
     name: 'Terraform Validate and Plan'
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
-      issues: write
       pull-requests: write
+    defaults:
+      run:
+        working-directory: ./infra
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMCLOUDTOKEN }}
 

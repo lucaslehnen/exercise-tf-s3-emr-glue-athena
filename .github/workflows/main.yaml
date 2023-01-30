@@ -29,6 +29,8 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMCLOUDTOKEN }}
 
+      - run: cd infra
+
       - name: Terraform Init
         id: init
         run: terraform init

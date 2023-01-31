@@ -1,26 +1,27 @@
-name: 'Terraform Deploy'
+name: 'Terraform Plan Check'
 
 on:
   push:
     branches:
-      - main
+      - develop
 
   pull_request:
     branches:
-      - main
+      - develop
 
 jobs:
 
   terraform-validate:
-    name: 'Terraform Plan & Apply'
+    name: 'Terraform Validate and Plan'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    defaults:
+      run:
+        working-directory: ./infra
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMCLOUDTOKEN }}
 
@@ -75,8 +76,3 @@ jobs:
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
-
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
-

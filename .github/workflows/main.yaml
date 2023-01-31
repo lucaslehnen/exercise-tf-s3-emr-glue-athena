@@ -15,10 +15,10 @@ jobs:
     name: 'Terraform Plan & Apply'
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
-      issues: write
       pull-requests: write
+    defaults:
+      run:
+        working-directory: ./infra
     steps:
 
       - name: Checkout
@@ -28,8 +28,6 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMCLOUDTOKEN }}
-
-      - run: cd infra
 
       - name: Terraform Init
         id: init
